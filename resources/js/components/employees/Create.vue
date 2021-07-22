@@ -14,29 +14,6 @@
 
                     <div class="card-body">
                         <form method="POST" action="">
-                            
-
-                            <div class="form-group row">
-                                <label for="country_code"
-                                    class="col-md-4 col-form-label text-md-right"></label>
-
-                                <div class="col-md-6">
-                                    <select class="form-control" id="country_id"
-                                       name="country_id" value="" required
-                                        aria-label="Default select example">
-                                        <option selected>--Select Country--</option>
-                                        
-                                            <option value=""></option>
-                                        
-                                    </select>
-                                     
-                                    
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong></strong>
-                                        </span>
-                                   
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label for="first_name"
                                     class="col-md-4 col-form-label text-md-right">First Name</label>
@@ -81,6 +58,51 @@
                                   
                                 </div>
                             </div>
+                             <div class="form-group row">
+                                <label for="country"
+                                    class="col-md-4 col-form-label text-md-right">Country</label>
+
+                                <div class="col-md-6">
+                                    <select class="form-control" id="country"
+                                       name="country" value="" required
+                                        aria-label="Default select example">
+                                        <option selected>--Select Country--</option>
+                                        
+                                            <option value=""></option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                             <div class="form-group row">
+                                <label for="state"
+                                    class="col-md-4 col-form-label text-md-right">State</label>
+
+                                <div class="col-md-6">
+                                    <select class="form-control" id="state"
+                                       name="state" value="" required
+                                        aria-label="Default select example">
+                                        <option selected>--Select State--</option>
+                                        
+                                            <option value=""></option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="department"
+                                    class="col-md-4 col-form-label text-md-right">Department</label>
+
+                                <div class="col-md-6">
+                                    <select class="form-control" id="department"
+                                       name="department" value="" required
+                                        aria-label="Default select example">
+                                        <option selected>--Select department--</option>
+                                        
+                                            <option value=""></option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="zipcode"
                                     class="col-md-4 col-form-label text-md-right">Zip Code</label>
@@ -92,7 +114,24 @@
                                   
                                 </div>
                             </div>
+                            <div class="form-group row mt-2">
+                                <label for="zipcode"
+                                    class="col-md-4 col-form-label text-md-right">Birth Date</label>
 
+                                <div class="col-md-6">
+                                    <datepicker input-class="form-control" ></datepicker>
+                                  
+                                </div>
+                            </div>
+                            <div class="form-group row mt-2">
+                                <label for="zipcode"
+                                    class="col-md-4 col-form-label text-md-right"> Date Hired</label>
+
+                                <div class="col-md-6">
+                                    <datepicker input-class="form-control" ></datepicker>
+                                  
+                                </div>
+                            </div>
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -111,8 +150,36 @@
 </template>
 
 <script>
-export default {
+import Datepicker from 'vuejs-datepicker';
 
+export default {
+components: {
+    Datepicker
+  },
+  data(){
+   return {
+    countries: [],
+    states: [],
+    cities: [],
+    departments: []
+   }
+  },
+
+  created(){
+    this.getCountries();
+  },
+
+  
+  methods:{
+    getCountries(){
+      axios.get('/api/employees/nchi').then(res =>{
+        this.countries = res.data
+        //console.log(res.data)
+      }).catch(error =>{
+        //console.log(error)
+      })
+    }
+  }
 }
 </script>
 
