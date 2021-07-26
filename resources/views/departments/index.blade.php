@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Countries</h1>
+        <h1 class="h3 mb-0 text-gray-800">Departments</h1>
     </div>
     <div class="row">
         <div class="card mx-auto">
@@ -17,13 +17,13 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col">
-                        <form method="GET" action="{{ route('countries.index') }}">
+                        <form method="GET" action="{{ route('departments.index') }}">
                             <div class="form-row align-items-center">
 
                                 <div class="col">
 
                                     <input class="form-control mb-2" type="search" name="search" id="autoSizingCheck"
-                                        placeholder="N limo">
+                                        placeholder="IT Dept">
 
                                 </div>
                                 <div class="col">
@@ -34,7 +34,7 @@
 
                     </div>
                     <div>
-                        <a class="btn btn-primary mb-2" href="{{ route('countries.create') }}">Create</a>
+                        <a class="btn btn-primary mb-2" href="{{ route('departments.create') }}">Create</a>
 
                     </div>
                 </div>
@@ -43,24 +43,29 @@
             </div>
             <div class="card-body">
                 <table class="table caption-top">
-                    <caption>List of countries</caption>
+                    <caption>List of Departments</caption>
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Country Code</th>
-                            <th scope="col">Country Name</th>
+                           
+                            <th scope="col">Department Name</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($countries as $country)
+                        @foreach ($departments as $dept)
                             <tr>
 
-                                <td>{{ $country->id }}</td>
-                                <td>{{ $country->country_code }}</td>
-                                <td>{{ $country->name }}</td>
+                                <td>{{ $dept->id }}</td>                               
+                                <td>{{ $dept->name }}</td>
                                 <td>
-                                    <a class="btn btn-success" href="{{ route('countries.edit', $country->id) }}">Edit</a>
+                                    
+                                    <a class="btn btn-success" href="{{ route('departments.edit', $dept->id) }}">Edit</a>
+                                    <form method="POST" action="{{ route('departments.destroy', $dept->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger"><span class="fa fa-trash"></span> </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

@@ -1,23 +1,19 @@
-@extends('layouts.main')
-@section('content')
-
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Countries</h1>
+<template>
+  <div>
+       <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Employees</h1>
     </div>
     <div class="row">
         <div class="card mx-auto">
             <div>
-                @if (session()->has('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
+               
 
-                @endif
+                
             </div>
             <div class="card-header">
                 <div class="row">
                     <div class="col">
-                        <form method="GET" action="{{ route('countries.index') }}">
+                        <form>
                             <div class="form-row align-items-center">
 
                                 <div class="col">
@@ -34,7 +30,7 @@
 
                     </div>
                     <div>
-                        <a class="btn btn-primary mb-2" href="{{ route('countries.create') }}">Create</a>
+                        <router-link :to="{name:'EmployeesCreate'}" class="btn btn-primary mb-2">Create</router-link>
 
                     </div>
                 </div>
@@ -47,23 +43,27 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Country Code</th>
-                            <th scope="col">Country Name</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Department</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($countries as $country)
+ 
                             <tr>
 
-                                <td>{{ $country->id }}</td>
-                                <td>{{ $country->country_code }}</td>
-                                <td>{{ $country->name }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>
-                                    <a class="btn btn-success" href="{{ route('countries.edit', $country->id) }}">Edit</a>
+                                    <a class="btn btn-success" href="">Edit</a>
                                 </td>
                             </tr>
-                        @endforeach
+                        
 
                     </tbody>
                 </table>
@@ -71,4 +71,15 @@
         </div>
 
     </div>
-@endsection
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
+</style>
