@@ -63,12 +63,12 @@
                                     class="col-md-4 col-form-label text-md-right">Country</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" id="country"
+                                    <select v-model="form.country_id" class="form-control" id="country"
                                        name="country" value="" required
                                         aria-label="Default select example">
-                                        <option selected>--Select Country--</option>
+                                        <option selected  v-for="country in countries" :key="country.id" :value="country.id" >{{ country.name }}</option>
                                         
-                                            <option value=""></option>
+                                            
                                         
                                     </select>
                                 </div>
@@ -97,6 +97,21 @@
                                        name="department" value="" required
                                         aria-label="Default select example">
                                         <option selected>--Select department--</option>
+                                        
+                                            <option value=""></option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="city"
+                                    class="col-md-4 col-form-label text-md-right">City</label>
+
+                                <div class="col-md-6">
+                                    <select  class="form-control" id="city"
+                                       name="city" value="" required
+                                        aria-label="Default select example">
+                                        <option selected>--Select city--</option>
                                         
                                             <option value=""></option>
                                         
@@ -161,7 +176,21 @@ components: {
     countries: [],
     states: [],
     cities: [],
-    departments: []
+    departments: [],
+    form: {
+        first_name:'',
+        middle_name:'',
+        last_name:'',
+        
+        address:'',
+        country_id: '',
+        state_id: '',
+        city_id: '',
+        department_id: '',
+        zipcode: '',        
+        birth_date: null,
+        hired_date: null 
+    }
    }
   },
 
