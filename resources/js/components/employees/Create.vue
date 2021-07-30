@@ -13,13 +13,13 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="">
+                        <form @submit.prevent="storeEmployee" >
                             <div class="form-group row">
                                 <label for="first_name"
                                     class="col-md-4 col-form-label text-md-right">First Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="first_name" type="text" class="form-control"
+                                    <input id="first_name" v-model="form.first_name" type="text" class="form-control"
                                         required />                                
                                         
                                   
@@ -31,7 +31,7 @@
 
                                 <div class="col-md-6">
                                     <input id="middle_name" type="text" class="form-control"
-                                        required />                                
+                                        required v-model="form.middle_name" />                                
                                         
                                   
                                 </div>
@@ -41,8 +41,8 @@
                                     class="col-md-4 col-form-label text-md-right">last Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="last_name" type="text" class="form-control"
-                                        required />                                
+                                    <input id="last_name" type="text"  class="form-control"
+                                        required v-model="form.last_name" />                                
                                         
                                   
                                 </div>
@@ -52,7 +52,7 @@
                                     class="col-md-4 col-form-label text-md-right">Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="address" type="text" class="form-control"
+                                    <input id="address" type="text" v-model="form.address" class="form-control"
                                         required />                                
                                         
                                   
@@ -63,8 +63,8 @@
                                     class="col-md-4 col-form-label text-md-right">Country</label>
 
                                 <div class="col-md-6">
-                                    <select v-model="form.country_id" class="form-control" id="country"
-                                       name="country" value="" required
+                                    <select v-model="form.country_id" @change="getStates()" class="form-control" id="country"
+                                       name="country" required
                                         aria-label="Default select example">
                                         <option selected  v-for="country in countries" :key="country.id" :value="country.id" >{{ country.name }}</option>
                                         
@@ -78,12 +78,11 @@
                                     class="col-md-4 col-form-label text-md-right">State</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" id="state"
-                                       name="state" value="" required
+                                    <select class="form-control" id="state" v-model="form.state_id" @change="getCities()"
+                                       name="state" required
                                         aria-label="Default select example">
-                                        <option selected>--Select State--</option>
                                         
-                                            <option value=""></option>
+                                            <option v-for="state in states" :key="state.id" :value="state.id" >{{ state.name}}</option>
                                         
                                     </select>
                                 </div>
@@ -93,12 +92,11 @@
                                     class="col-md-4 col-form-label text-md-right">Department</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" id="department"
-                                       name="department" value="" required
+                                    <select class="form-control" id="department" v-model="form.department_id"
+                                       name="department" required
                                         aria-label="Default select example">
-                                        <option selected>--Select department--</option>
                                         
-                                            <option value=""></option>
+                                            <option v-for="department in departments" :key="department.id" :value="department.id" >{{department.name}}</option>
                                         
                                     </select>
                                 </div>
@@ -108,12 +106,12 @@
                                     class="col-md-4 col-form-label text-md-right">City</label>
 
                                 <div class="col-md-6">
-                                    <select  class="form-control" id="city"
-                                       name="city" value="" required
+                                    <select  class="form-control" id="city" 
+                                       name="city" required v-model="form.city_id" 
                                         aria-label="Default select example">
-                                        <option selected>--Select city--</option>
+                                       
                                         
-                                            <option value=""></option>
+                                            <option v-for="city in cities" :key="city.id" :value="city.id" >{{ city.name}}</option>
                                         
                                     </select>
                                 </div>
@@ -123,7 +121,7 @@
                                     class="col-md-4 col-form-label text-md-right">Zip Code</label>
 
                                 <div class="col-md-6">
-                                    <input id="zipcode" type="text" class="form-control"
+                                    <input id="zipcode" v-model="form.zip_code" type="text" class="form-control"
                                         required />                                
                                         
                                   
@@ -134,7 +132,7 @@
                                     class="col-md-4 col-form-label text-md-right">Birth Date</label>
 
                                 <div class="col-md-6">
-                                    <datepicker input-class="form-control" ></datepicker>
+                                    <datepicker input-class="form-control" v-model="form.birthdate" ></datepicker>
                                   
                                 </div>
                             </div>
@@ -143,7 +141,7 @@
                                     class="col-md-4 col-form-label text-md-right"> Date Hired</label>
 
                                 <div class="col-md-6">
-                                    <datepicker input-class="form-control" ></datepicker>
+                                    <datepicker input-class="form-control" v-model="form.date_hired" ></datepicker>
                                   
                                 </div>
                             </div>
@@ -166,6 +164,7 @@
 
 <script>
 import Datepicker from 'vuejs-datepicker';
+import moment from 'moment';
 
 export default {
 components: {
@@ -180,22 +179,22 @@ components: {
     form: {
         first_name:'',
         middle_name:'',
-        last_name:'',
-        
+        last_name:'',        
         address:'',
         country_id: '',
         state_id: '',
         city_id: '',
         department_id: '',
-        zipcode: '',        
-        birth_date: null,
-        hired_date: null 
+        zip_code: '',        
+        birthdate: null,
+        date_hired: null 
     }
    }
   },
 
   created(){
     this.getCountries();
+    this.getDepartments();
   },
 
   
@@ -207,9 +206,59 @@ components: {
       }).catch(error =>{
         //console.log(error)
       })
-    }
+    },
+    getStates(){
+        axios.get('/api/employees/'+this.form.country_id+'/states').then(res =>{
+        this.states = res.data
+        //console.log(res.data)
+      }).catch(error =>{
+        //console.log(error)
+      })
+    },
+    getCities(){
+        axios.get('/api/employees/'+this.form.state_id+'/cities').then(res =>{
+        this.cities = res.data
+        //console.log(res.data)
+      }).catch(error =>{
+        //console.log(error)
+      })
+    },
+     getDepartments(){
+        axios.get('/api/employees/departments').then(res =>{
+        this.departments = res.data
+        //console.log(res.data)
+      }).catch(error =>{
+        //console.log(error)
+      })
+    },
+
+    storeEmployee(){
+        axios.post('/api/employees',{
+            'first_name': this.form.first_name,
+            'middle_name': this.form.middle_name,
+            'last_name': this.form.last_name,
+            'address': this.form.address,
+            'country_id': this.form.country_id,
+            'state_id': this.form.state_id,
+            'city_id': this.form.city_id,
+            'department_id': this.form.department_id,
+            'zip_code': this.form.zip_code,
+            'birthdate': this.format_date(this.form.birthdate),
+            'date_hired': this.format_date(this.form.date_hired),            
+        }).then((res=>{
+            this.$router.push({name: 'EmployeesIndex'})
+            console.log(res);
+        }))
+
+    },
+
+    format_date(value){
+        if(value){
+            return moment(String(value)).format('YYYYMMDD');
+        }
+    },
   }
-}
+};
 </script>
 
 <style>
